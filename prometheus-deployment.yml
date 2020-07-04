@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+  namespace: default
+  labels:
+    deploy: prometheus-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: prometheus-server
+    spec:
+      containers:
+        - name: prometheus
+          image: minikube:5000/prometheus
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus/"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-config-file-volume
+              mountPath: /etc/prometheus/
+            - name: prometheus-storage-volume
+              mountPath: /prometheus/
+      volumes:
+        - name: prometheus-config-file-volume
+          configMap:
+            defaultMode: 420
+            name: prometheus-config-file-volume
+
+        - name: prometheus-storage-volume
+          persistentVolumeClaim:
+            claimName: prometheus-storage-pvc

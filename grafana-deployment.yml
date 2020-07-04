@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  labels:
+    app: grafana-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: grafana-server
+    spec:
+      containers:
+      - image: minikube:5000/grafana
+        name: grafana
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+          - name: grafana-storage-volume
+            mountPath: /var/lib/grafana
+      volumes:
+        - name: grafana-storage-volume
+          persistentVolumeClaim:
+            claimName: grafana-storage-pvc
