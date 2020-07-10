@@ -8,6 +8,7 @@ internal NFS dynamic provisioner is available for the storage class so it can cl
 follow this repo for creating NFS-client dynamic provisioner in the K8s cluster using a service account, cluster roles, etc.
 
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+
 https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 
 Also, install Github, Build Pipeline Plugin in Jenkins.
