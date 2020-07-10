@@ -6,8 +6,10 @@ Prerequisites:-
 A pre-installed K8s cluster(e.g. minikube). In minikube by default, there is no
 internal NFS dynamic provisioner is available for the storage class so it can claim a PVC or PV dynamically. so we are creating a NFS-client dynamic provisioner in the K8s cluster using a service account, cluster roles, etc., which basically uses RBAC (role-based access controls) Authorization.
 follow this repo for creating NFS-client dynamic provisioner in the K8s cluster using a service account, cluster roles, etc.
+
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
 Also, install Github, Build Pipeline Plugin in Jenkins.
 For creating cloud nodes using Docker(install Docker plugin in Jenkins)
 then create a DOCKER_HOST (install docker, start and enable its services).
@@ -40,7 +42,7 @@ Job2 will be trigger by Job1 on it’s successful build.
 ![job2](images/6.png)
 ![job2](images/7.png)
 
-`
+```
 echo "prometheus tasks are started"
 if  kubectl get cm prometheus-config-file-volume  
 then 
@@ -101,7 +103,8 @@ else
     echo "creating grafana-deployment"   
 fi
 echo "grafana tasks are ended"
-`
+```
+
 ![complete](images/8.png)
 
 ## Now we can access our Prometheus services and Grafana services.
@@ -127,7 +130,7 @@ password:- admin
 
 ## So, now we have created our data persistent in our centralized NFS server(192.168.99.102).
 
-`
+```
 [root@server ~]# ls /storage/
 default-grafana-storage-pvc-pvc-0ccdd2d9-6008-4947-a895-b7d9d359e475
 default-prometheus-storage-pvc-pvc-125fb35e-f5a8-4d58-b2e1-bc445dcbcd12
@@ -137,5 +140,5 @@ chunks_head  lock  queries.active  wal
 
 [root@server ~]# ls /storage/default-grafana-storage-pvc-pvc-0ccdd2d9-6008-4947-a895-b7d9d359e475/
 grafana.db  plugins  png
-`
+```
 P.S.- Any questions or suggestions are welcome.
