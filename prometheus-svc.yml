@@ -8,10 +8,11 @@ metadata:
 spec:
   selector:
     app: prometheus-server
-  clusterIP: None
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 9090
+    nodePort: 31000
 
 
 
